@@ -19,6 +19,8 @@ Muuda saidi juurkataloogis `.htaccess` faili, lisades reeglid URL'ide ümberkirj
     RewriteBase /
     RewriteRule ^auth/cardAuthRequest$ ID-AJAX/IDCardAuth/cardauth.php?action=cardAuthRequest&%{QUERY_STRING} [NC]
     RewriteRule ^auth/(.*)$ ID-AJAX/auth.php?action=$1&%{QUERY_STRING} [NC]
+
+ID kaardi tugi peab olema serveris olemas. See on automaatselt olemas näiteks Zone III paketis ja Veebimajutus.ee Standard+ paketis - nende pakettide puhul midagi täiendavalt ise ID kaardi töölepanekuks tegema ei pea.
     
 Ava aadress `https://sinuserver.com/ID-AJAX/test/` ning proovi järgi, kas asi töötab.
 
