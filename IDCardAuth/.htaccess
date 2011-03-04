@@ -1,0 +1,6 @@
+SSLVerifyClient require
+SSLVerifyDepth 2
+
+<Files ~ "\.(cgi|shtml|php)$">
+    SSLOptions +StdEnvVars +ExportCertData
+</Files>
