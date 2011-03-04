@@ -50,6 +50,6 @@ Kasutamine
 
 Kõige parem on vaadata, kuidas töötab *ID-AJAX/test/index.html*. Kasutatud JavaScript sõltub Prototype teegist. */ID-AJAX/static/IDCardModule.js* on vajalik ID kaardiga allkirjastamiseks, */ID-AJAX/static/AUTH.js* sisaldab tegevusi Mobiil-ID'ga autentimiseks ja allkirjastamiseks ning ID kaardiga autentimiseks. *auth_sign.js* on näiteskript autentimise ja allkirjastamise läbiviimiseks.
 
-Näiterakendus teeb loob iga allkirjastamise jaoks uue faili, aga kui viide faili juurde (fid väärtus) on olemas, saab sama faili ka korduvalt allkirjastada.
+Näiterakendus teeb loob iga allkirjastamise jaoks uue faili, aga kui viide faili juurde (fid väärtus) on olemas, saab sama faili ka korduvalt allkirjastada. Mõistlik oleks võibolla *auth/addFile* meetod üldse välja lülitada ja tekitada allkirjastatavad failid mingil muul moel, kui et kasutaja need ise üles laeb.
 
 Allkirjastamise jaoks peab lehel olema DOM element, mille *id* väärtuseks on *pluginLocation*. Skriptis *auth_sign.js* lisab selle lehele automaatselt funktsioon *init_card_plugin()* seega ei pea element olema HTML'i vägisi sisse kirjutatud. 
