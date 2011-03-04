@@ -36,7 +36,7 @@ function do_card_auth(){
     $("nupp").disable();
 
     AUTH.cardAuthRequest(function(error, data){
-     if(error){
+        if(error){
             $("nupp").enable();
             $("tulemus").innerHTML = "Viga: <br />"+error.message;
             return;
@@ -53,11 +53,11 @@ function do_mobile_auth(){
     $("nupp").disable();
 
     AUTH.mobileAuthRequest(phone,{message:"Testsõnum!"}, function(error, data){
-         if(error){
+        if(error){
             $("nupp").enable();
-              $("tulemus").innerHTML = "Viga: <br />"+error.message;
+                $("tulemus").innerHTML = "Viga: <br />"+error.message;
             return;
-         }
+        }
         $("tulemus").innerHTML = "Kood: "+data.code;
 
         AUTH.mobileAuthStatus(data.sid, function(error, data){
