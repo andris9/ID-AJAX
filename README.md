@@ -30,3 +30,8 @@ Märkused
   * Teenuse sertide asukoht on *ID-AJAX/lib/service_certs.pem*
   * DigiDoc teek puhverdab WSDL klassi faili *ID-AJAX/wsdl.class.php* - juhul kui *conf.php* faili muudetakse, tuleb see WSDL ära kustutada
   * Allkirjastatavate failidega majandab klass `FileStore` (*ID-AJAX/filestore.php*), mis vaikimisi salvestab kõigi failide andmed kausta */ID-AJAX/tmpfiles*. Juhul kui tekib soov need failid kuhugi mujale paigutada (MySQL vms), siis võib FileStore klassi üle kirjutada, oluline on vaid jätta selle klassi API samaks, sisu võib aga suvaline olla.
+  
+Live demo
+---------
+
+Toimivat demo võib näha järgmiselt aadressilt - [https://www.digituvastus.org/ID-AJAX/test/](https://www.digituvastus.org/ID-AJAX/test/). Juhul kui enda koopia korral on kõik korrektselt seadistatud peab lõpptulemus olema sama.
