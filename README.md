@@ -65,12 +65,14 @@ Kõikide AJAX päringute puhul on vea korral (v.a. ID kaardiga autentimine, kui 
   * *message*: "Vea kirjeldus"
   * *code*: "vea_kood"
 
+    
     {
         "status": "ERROR",
         "message": "Authentication failed!",
         "code": "SESSION_TIMEOUT"
     }
-
+    
+    
 ## Autentimine
 
 ### ID kaart
@@ -93,6 +95,7 @@ JSON struktuur on järgmine
     * *UserSurname*: "perekonnanimi"
     * *UserCountry*: "2 kohaline maa nimetus (EE)"
 
+    
     {
         "status": "AUTHENTICATED",
         "data":{
@@ -102,6 +105,7 @@ JSON struktuur on järgmine
             "UserCountry": "EE"
         }
     }
+    
 
 ### Mobiil-ID
 
@@ -117,11 +121,13 @@ Autentimise algatamise tagastuseks on JSON struktuur selle õnnestumise kohta. P
   * *sid*: numbriline sessiooni võti
   * *code*: "kontrollkood kasutajale kuvamiseks"
 
+    
     {
         "status": "OK",
         "sid": 128463527,
         "code": "5612"
     }
+    
 
 Kui autentimine on algatatud, tuleb järgmisena alustada perioodilist kontrolli selle kulgemise kohta. Kontrollimisel on kohustuslikuks (ja ainsaks) parameetriks `sid` autentimise sessiooni võtmega. 
 
@@ -153,10 +159,12 @@ Vastuseks saadab server loodud faili identifikaatori `fid`, mida saab kasutada a
   * *status*: "OK"
   * *fid*: "faili identifikaator (42 baiti)"
 
+    
     {
         "status": "OK",
         "fid": "1299265325ccb62cd5613213d46fdb8c39f288b0d0"
     }
+    
 
 Kui faili identifikaator on olemas, saab seda faili allkirjastada. Sama identifikaatorit kasutades saab lisada ühele failile 
 mitu erinevat allkirja ja seda nii ID kaardi kui ka mobiiliga.
