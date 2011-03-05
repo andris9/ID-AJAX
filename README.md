@@ -174,6 +174,9 @@ JSON:
 Kui faili identifikaator on olemas, saab seda faili allkirjastada. Sama identifikaatorit kasutades saab lisada ühele failile 
 mitu erinevat allkirja ja seda nii ID kaardi kui ka mobiiliga.
 
+Mõistlik oleks failide lisamine organiseerida siiski kuidagi teisit, mitte lasta neid kasutajatel vabalt üles laadida.
+Faili lisamise leiab failist */ID-AJAX/auth.php* funktsioonis `URLHandlers::addFileHandler`.
+
 ### ID kaardiga allkirjastamine
 
 ID kaardiga allkirjastamiseks peab lehel olema laetud JavaScripti fail */ID-AJAX/static/IDCardModule.js* ning peale lehe laadimist
