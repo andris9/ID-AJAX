@@ -53,3 +53,31 @@ Kõige parem on vaadata, kuidas töötab *ID-AJAX/test/index.html*. Kasutatud Ja
 Näiterakendus teeb loob iga allkirjastamise jaoks uue faili, aga kui viide faili juurde (fid väärtus) on olemas, saab sama faili ka korduvalt allkirjastada. Mõistlik oleks võibolla *auth/addFile* meetod üldse välja lülitada ja tekitada allkirjastatavad failid mingil muul moel, kui et kasutaja need ise üles laeb.
 
 Allkirjastamise jaoks peab lehel olema DOM element, mille *id* väärtuseks on *pluginLocation*. Skriptis *auth_sign.js* lisab selle lehele automaatselt funktsioon *init_card_plugin()* seega ei pea element olema HTML'i vägisi sisse kirjutatud. 
+
+# Töökorraldus
+
+Kogu sessiooniga seotud info on PHP poolel hallatud standardse PHP sessiooniga, seega on vajalik skritpi alguses sessioon alati käima panna käsuga `session_start()`.
+Sessiooni muutujates on kirjas autenditud kasutaja andmed (nimi, isikukood, kas autenditi id kaardi või mobiiliga jne) ning allkirjastamise protsessi ajal ka sellega seotud andmed.
+
+## Autentimine
+
+
+### ID kaart
+
+ID kaardiga autentimisel on suurem töö jäetud serveri haldaja peale. Näiteks Zone ja Veebimajutus HTTPS toega pakettides on ID kaardi tugi juba "sisse ehitatud," seega erlist keerukust ei teki.
+
+Autentimiseks tuleb teha AJAX päring aadressile `/auth/cardAuthRequest` (lisaparameetreid pole). Vastuseks on JSON struktuur kasutaja andmetega või viga. Peamiseks vea
+tekkimise allikaks on ID kaardiga seotud pool (kaart pole sisestatud, kasutaja katkestab, ID kaardi tuge pole kasutaja arvutis olemaski jne) - kõikidel nendel juhtudel lõpetab
+AJAX päring töö staatusega 0.
+
+Serveri poolel käivitatakse skript asukohaga `/ID-AJAX/IDCardAuth/cardauth.php` millega samas kataloogis olevas *.htaccess* failis on määratud ID kaardi tuvastamise vajadus ning määrang, et ID kaardiga seotud info edastatakse skriptidele keskkonnamuutujates.
+PHP skript kutsub välja `Auth::CardAuthRequest();` funktsiooni, mis kasutaja andmed keskkonnamuutujatest välja loeb ja sessiooni väärtusena salvestab.
+
+JSON struktuur on järgmine
+
+    * *status*: "AUTHENTICATED"
+    * *data*:
+      * *UserIDCode*: "isikukood"
+      * *UserGivenname*: "eesnimi"
+      * *UserSurname*: "perekonnanimi"
+      * *UserCountry*: "2 kohaline maa nimetus (EE)"
