@@ -75,9 +75,9 @@ PHP skript kutsub välja `Auth::CardAuthRequest();` funktsiooni, mis kasutaja an
 
 JSON struktuur on järgmine
 
-    * *status*: "AUTHENTICATED"
-    * *data*:
-      * *UserIDCode*: "isikukood"
-      * *UserGivenname*: "eesnimi"
-      * *UserSurname*: "perekonnanimi"
-      * *UserCountry*: "2 kohaline maa nimetus (EE)"
+  * *status*: "AUTHENTICATED"
+  * *data*:
+    * *UserIDCode*: "isikukood"
+    * *UserGivenname*: "eesnimi"
+    * *UserSurname*: "perekonnanimi"
+    * *UserCountry*: "2 kohaline maa nimetus (EE)"
