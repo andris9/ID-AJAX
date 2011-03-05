@@ -195,4 +195,5 @@ ja seejärel perioodiliselt kontrollida allkirjastamise kulgu (`/auth/mobileSign
 
 Allkirjastatud failid saab alla laadia aadressilt `/auth/getDDOC?fid={fid}` kus {fid} on allalaetava faili identifikaator
 
+Kõikide siin kirjeldatud toimingute läbiviimist saab uurida testrakendusest.
 
