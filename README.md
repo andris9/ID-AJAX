@@ -114,4 +114,6 @@ Kui vastuses on *status* väärtuseks "WAITING" tuleb kontrolli mõne aja päras
 
 Allkirjastamiseks on vaja kõigepealt mõnda faili, mida allkirjastada. Failidega majandamiseks on klass `FileStore` mis asub failis *filestore.php*.
 
+Mobiil-ID ja ID kaardiga allkirjastamise suurem vahe on faktis, et kui ID kaardi puhul allirijastatakse faili, siis Mobiil-ID puhul allkirjastatakse XML elemendi räsi. ID kaardiga tuleb saata fail Sertifitseerimiskeskuse serverile, lisada ID kaardilt saadud allkirja räsi ja vastu saadakse DDOC fail, mis sisaldab nii algset dokumenti kui ka allkirja kinnitust. Mobiil ID puhul tuleb Sertifitseerimiskeskuse serverile saata räsi üle faili XML kirje ning vastu saadakse XML kujul allkirja kinnitus mis tuleb lisada ise DDOC faili.
+
 ... (jätkub) 
