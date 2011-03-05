@@ -65,6 +65,7 @@ Kõikide AJAX päringute puhul on vea korral (v.a. ID kaardiga autentimine, kui 
   * *message*: "Vea kirjeldus"
   * *code*: "vea_kood"
 
+JSON:
     
     {
         "status": "ERROR",
@@ -95,7 +96,9 @@ JSON struktuur on järgmine
     * *UserSurname*: "perekonnanimi"
     * *UserCountry*: "2 kohaline maa nimetus (EE)"
 
-    
+
+JSON:
+
     {
         "status": "AUTHENTICATED",
         "data":{
@@ -121,7 +124,8 @@ Autentimise algatamise tagastuseks on JSON struktuur selle õnnestumise kohta. P
   * *sid*: numbriline sessiooni võti
   * *code*: "kontrollkood kasutajale kuvamiseks"
 
-    
+JSON:
+
     {
         "status": "OK",
         "sid": 128463527,
@@ -159,7 +163,8 @@ Vastuseks saadab server loodud faili identifikaatori `fid`, mida saab kasutada a
   * *status*: "OK"
   * *fid*: "faili identifikaator (42 baiti)"
 
-    
+JSON:
+
     {
         "status": "OK",
         "fid": "1299265325ccb62cd5613213d46fdb8c39f288b0d0"
@@ -169,7 +174,7 @@ Vastuseks saadab server loodud faili identifikaatori `fid`, mida saab kasutada a
 Kui faili identifikaator on olemas, saab seda faili allkirjastada. Sama identifikaatorit kasutades saab lisada ühele failile 
 mitu erinevat allkirja ja seda nii ID kaardi kui ka mobiiliga.
 
-#### ID kaardiga allkirjastamine
+### ID kaardiga allkirjastamine
 
 ID kaardiga allkirjastamiseks peab lehel olema laetud JavaScripti fail */ID-AJAX/static/IDCardModule.js* ning peale lehe laadimist
 tuleb lisada allkirjastamiseks vajalik plugin. Demolehel teeb seda funktsioon `init_card_plugin()`.
@@ -189,7 +194,5 @@ ja seejärel perioodiliselt kontrollida allkirjastamise kulgu (`/auth/mobileSign
 ### Allkirjastatud failid
 
 Allkirjastatud failid saab alla laadia aadressilt `/auth/getDDOC?fid={fid}` kus {fid} on allalaetava faili identifikaator
-
-
 
 
