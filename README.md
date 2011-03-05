@@ -108,8 +108,10 @@ Kui autentimine on algatatud, tuleb järgmisena alustada perioodilist kontrolli 
     * *status*: "WAITING"
   * Kui autentimine õnnestus, on tulemus sama nagu ID kaardiga autentimise korral.
 
+Kui vastuses on *status* väärtuseks "WAITING" tuleb kontrolli mõne aja pärast korrata.
+
 ## Allkirjastamine
 
-Allkirjastamiseks on vaja kõigepealt mõnda faili, mida allkirjastada
+Allkirjastamiseks on vaja kõigepealt mõnda faili, mida allkirjastada. Failidega majandamiseks on klass `FileStore` mis asub failis *filestore.php*.
 
-.... 
+... (jätkub) 
