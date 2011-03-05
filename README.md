@@ -65,6 +65,12 @@ Kõikide AJAX päringute puhul on vea korral (v.a. ID kaardiga autentimine, kui 
   * *message*: "Vea kirjeldus"
   * *code*: "vea_kood"
 
+    {
+        "status": "ERROR",
+        "message": "Authentication failed!",
+        "code": "SESSION_TIMEOUT"
+    }
+
 ## Autentimine
 
 ### ID kaart
@@ -87,6 +93,16 @@ JSON struktuur on järgmine
     * *UserSurname*: "perekonnanimi"
     * *UserCountry*: "2 kohaline maa nimetus (EE)"
 
+    {
+        "status": "AUTHENTICATED",
+        "data":{
+            "UserIDCode": "3901212544",
+            "UserGivenname": "Mati",
+            "UserSurname": "Maasikas",
+            "UserCountry": "EE"
+        }
+    }
+
 ### Mobiil-ID
 
 Mobiil-ID autentimine koosneb kahest eri etapist:
@@ -101,6 +117,12 @@ Autentimise algatamise tagastuseks on JSON struktuur selle õnnestumise kohta. P
   * *sid*: numbriline sessiooni võti
   * *code*: "kontrollkood kasutajale kuvamiseks"
 
+    {
+        "status": "OK",
+        "sid": 128463527,
+        "code": "5612"
+    }
+
 Kui autentimine on algatatud, tuleb järgmisena alustada perioodilist kontrolli selle kulgemise kohta. Kontrollimisel on kohustuslikuks (ja ainsaks) parameetriks `sid` autentimise sessiooni võtmega. 
 
   * Kui autentimine lõpeb veaga (kasutaja vajutas "cancel", aeg sai otsa vms), on tagastusväärtuseks tavaline veateavitus.
@@ -112,8 +134,54 @@ Kui vastuses on *status* väärtuseks "WAITING" tuleb kontrolli mõne aja päras
 
 ## Allkirjastamine
 
-Allkirjastamiseks on vaja kõigepealt mõnda faili, mida allkirjastada. Failidega majandamiseks on klass `FileStore` mis asub failis *filestore.php*.
+Allkirjastamiseks on vaja kõigepealt mõnda faili, mida allkirjastada. Failidega majandamiseks on klass `FileStore` 
+mis asub failis *filestore.php*.
 
-Mobiil-ID ja ID kaardiga allkirjastamise suurem vahe on faktis, et kui ID kaardi puhul allirijastatakse faili, siis Mobiil-ID puhul allkirjastatakse XML elemendi räsi. ID kaardiga tuleb saata fail Sertifitseerimiskeskuse serverile, lisada ID kaardilt saadud allkirja räsi ja vastu saadakse DDOC fail, mis sisaldab nii algset dokumenti kui ka allkirja kinnitust. Mobiil ID puhul tuleb Sertifitseerimiskeskuse serverile saata räsi üle faili XML kirje ning vastu saadakse XML kujul allkirja kinnitus mis tuleb lisada ise DDOC faili.
+Mobiil-ID ja ID kaardiga allkirjastamise suurem vahe on faktis, et kui ID kaardi puhul allkirijastatakse faili, 
+siis Mobiil-ID puhul allkirjastatakse XML elemendi räsi. ID kaardiga tuleb saata fail Sertifitseerimiskeskuse 
+serverile, lisada ID kaardilt saadud allkirja räsi ja vastu saadakse DDOC fail, mis sisaldab nii algset dokumenti 
+kui ka allkirja kinnitust. Mobiil ID puhul tuleb Sertifitseerimiskeskuse serverile saata räsi üle faili XML kirje 
+loodavas DDOC failis ning vastu saadakse XML kujul allkirja kinnitus mis tuleb ise DDOC faili juurde lisada.
 
-... (jätkub) 
+Näitena saab tekitada allkirjastamiseks uue faili käsuga `/auth/addFile`, mille parameetritena tuleb edastada järgmised andmed
+
+  * *filename* - faili nimi
+  * *contents* - faili sisu
+
+Vastuseks saadab server loodud faili identifikaatori `fid`, mida saab kasutada allkirjastamise jaoks.
+
+  * *status*: "OK"
+  * *fid*: "faili identifikaator (42 baiti)"
+
+    {
+        "status": "OK",
+        "fid": "1299265325ccb62cd5613213d46fdb8c39f288b0d0"
+    }
+
+Kui faili identifikaator on olemas, saab seda faili allkirjastada. Sama identifikaatorit kasutades saab lisada ühele failile 
+mitu erinevat allkirja ja seda nii ID kaardi kui ka mobiiliga.
+
+#### ID kaardiga allkirjastamine
+
+ID kaardiga allkirjastamiseks peab lehel olema laetud JavaScripti fail */ID-AJAX/static/IDCardModule.js* ning peale lehe laadimist
+tuleb lisada allkirjastamiseks vajalik plugin. Demolehel teeb seda funktsioon `init_card_plugin()`.
+
+Kui plugin on lehel olemas, tuleb esiteks laadida ID kaardilt sertifikaadi andmed, saata need serverile (`/auth/cardPrepareSignature`)
+ja seejärel saadud andmetega viia allkirjastamine läbi. Kui allkirja andmed on olemas, saab need 
+saata serverile (`/auth/cardFinalizeSignature`) kinnitamiseks. Protsessi saab mugavalt läbi viia JavaScript funktsiooniga
+`AUTH.preparesignatureRequest(fid, callback)` kus `fid` on allkirjastatava faili identifikaator ja `callback` on 
+tagasikutsefunktsioon, mis saab parameetriks väärtused `error` ja `data`. Esimene parameeter on seatud, kui protsessis ilmnes viga
+ja teine kui kõik õnnestus.
+
+### Mobiil-ID allkirjastamine
+
+Mobiil-ID abil allkirjastamine sarnaneb autentimisega. Esiteks tuleb algatada signeerimisprotseduur (`/auth/mobileSignRequest`)
+ja seejärel perioodiliselt kontrollida allkirjastamise kulgu (`/auth/mobileSignStatus`).
+
+### Allkirjastatud failid
+
+Allkirjastatud failid saab alla laadia aadressilt `/auth/getDDOC?fid={fid}` kus {fid} on allalaetava faili identifikaator
+
+
+
+
