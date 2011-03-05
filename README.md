@@ -59,8 +59,13 @@ Allkirjastamise jaoks peab lehel olema DOM element, mille *id* väärtuseks on *
 Kogu sessiooniga seotud info on PHP poolel hallatud standardse PHP sessiooniga, seega on vajalik skritpi alguses sessioon alati käima panna käsuga `session_start()`.
 Sessiooni muutujates on kirjas autenditud kasutaja andmed (nimi, isikukood, kas autenditi id kaardi või mobiiliga jne) ning allkirjastamise protsessi ajal ka sellega seotud andmed.
 
-## Autentimine
+Kõikide AJAX päringute puhul on vea korral (v.a. ID kaardiga autentimine, kui vastust üldse pole ning `response.status==0`) on vastus JSON järgmise struktuuriga
 
+  * *status*: "ERROR"
+  * *message*: "Vea kirjeldus"
+  * *code*: "vea_kood"
+
+## Autentimine
 
 ### ID kaart
 
@@ -81,3 +86,30 @@ JSON struktuur on järgmine
     * *UserGivenname*: "eesnimi"
     * *UserSurname*: "perekonnanimi"
     * *UserCountry*: "2 kohaline maa nimetus (EE)"
+
+### Mobiil-ID
+
+Mobiil-ID autentimine koosneb kahest eri etapist:
+
+  1. Autentimise algatamine, tehes päringu aadressile `/auth/mobileAuthRequest'
+  2. Perioodiline autentimise kulgemise kontroll aadressil `/auth/mobileAuthStatus`
+  
+Autentimise algatmisel on kohustuslikuks parameetriks `phone` telefoninumbriga, täiendavalt saab edastada veel parameetri `message` mis tähistab kuni 40 tähemärgi pikkust kasutaja mobiiliekraanile kuvatavat teadet.
+Autentimise algatamise tagastuseks on JSON struktuur selle õnnestumise kohta. Probleemseteks punktideks on olukorrad kus telefoni number ei ole Mobiil-ID'ga seotud, on levist väljas või on mõni muu tehniline rike. Eduka päringu sooritamise korral on vastus järgmine:
+
+  * *status*: "OK"
+  * *sid*: numbriline sessiooni võti
+  * *code*: "kontrollkood kasutajale kuvamiseks"
+
+Kui autentimine on algatatud, tuleb järgmisena alustada perioodilist kontrolli selle kulgemise kohta. Kontrollimisel on kohustuslikuks (ja ainsaks) parameetriks `sid` autentimise sessiooni võtmega. 
+
+  * Kui autentimine lõpeb veaga (kasutaja vajutas "cancel", aeg sai otsa vms), on tagastusväärtuseks tavaline veateavitus.
+  * Kui autentimine veel kestab (kasutaja pole koodi sisestanud ega katkestanud), on JSON struktuur järgmine
+    * *status*: "WAITING"
+  * Kui autentimine õnnestus, on tulemus sama nagu ID kaardiga autentimise korral.
+
+## Allkirjastamine
+
+Allkirjastamiseks on vaja kõigepealt mõnda faili, mida allkirjastada
+
+.... 
