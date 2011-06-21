@@ -38,7 +38,7 @@ Märkused
 Live demo
 ---------
 
-Toimivat demo võib näha järgmiselt aadressilt - [https://www.digituvastus.org/ID-AJAX/test/](https://www.digituvastus.org/ID-AJAX/test/). Juhul kui enda koopia korral on kõik korrektselt seadistatud peab lõpptulemus olema sama.
+Hetkel *live* demo puudub
 
 Litsents
 --------
